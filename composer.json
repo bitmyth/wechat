@@ -1,0 +1,29 @@
+{
+  "name": "bitmyth/wechat",
+  "description": "PHP library for wechat development",
+  "type": "library",
+  "require": {
+    "php": "^7.0"
+  },
+  "authors": [
+    {
+      "name": "bitmyth",
+      "email": "fishis@163.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Bitmyth\\Wechat\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Bitmyth\\Wechat\\WechatServiceProvider"
+      ],
+      "aliases": {
+        "Wechat": "Bitmyth\\Wechat\\WechatServiceProvider"
+      }
+    }
+  }
+}
