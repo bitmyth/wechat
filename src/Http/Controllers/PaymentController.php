@@ -5,16 +5,27 @@ namespace Bitmyth\Wechat\Http\Controllers;
 use Bitmyth\Wechat\PayNotifyCallback;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
+use Wechat\WxApi;
 use Wechat\WxPayApi;
 use Wechat\WxPayOrderQuery;
 use Wechat\WxPayRefund;
 use Wechat\WxPayUnifiedOrder;
 
+/**
+ * Class PaymentController
+ * @package Bitmyth\Wechat\Http\Controllers
+ */
 class PaymentController extends Controller
 {
-    public function pay(Request $request, Calligraphy $calligraphy)
+    /**
+     * @param Request $request
+     * @param $order
+     * @param $productId
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function pay(Request $request, $order)
     {
-        $order = $this->store($request, $calligraphy);
         try {
             //调用统一下单API
             $ret = $this->placeUnifiedOrder($order);
@@ -72,6 +83,12 @@ class PaymentController extends Controller
         return $result;
     }
 
+    /**
+     * @param Request $request
+     * @param $uuid
+     * @return \Wechat\成功时返回，其他抛异常
+     * @throws \Wechat\WxPayException
+     */
     public static function queryOrder(Request $request, $uuid)
     {
         $payOrderQuery = new WxPayOrderQuery();
@@ -81,6 +98,13 @@ class PaymentController extends Controller
     }
 
     //退款
+
+    /**
+     * @param Request $request
+     * @param $uuid
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Wechat\WxPayException
+     */
     public function refund(Request $request, $uuid)
     {
         $input = new WxPayRefund();
@@ -109,16 +133,25 @@ class PaymentController extends Controller
         }
     }
 
+    /**
+     * @param $uuid
+     * @throws \Exception
+     */
     protected function findOrderByUUID($uuid)
     {
         // $order = Order::where('uuid', $uuid)->firstOrFail();
-        throw new \Exception('Must implement this method findOrderByUUID');
+        throw new \Exception('Must implement this method ' . __METHOD__);
     }
 
+    /**
+     * @param $order
+     * @throws \Exception
+     */
     protected function refunded($order)
     {
-//        $order->status = 'refunded';
-//        $order->save();
+        // $order->status = 'refunded';
+        // $order->save();
+        throw new \Exception('Must implement this method ' . __METHOD__);
     }
 
     /**
@@ -128,7 +161,7 @@ class PaymentController extends Controller
     public function paymentNotify()
     {
         try {
-            $notify = new PayNotifyCallback();
+            $notify = new PayNotifyCallback([$this, 'paid']);
             $notify->Handle(false);
         } catch (\Exception $e) {
             Log::info($e->getMessage());
@@ -137,8 +170,27 @@ class PaymentController extends Controller
         }
     }
 
-    protected function notified(Request $request, $user)
+    /**
+     * @param $data
+     * @return bool
+     */
+    protected function paid($data)
     {
+        $order = Order::where('uuid', $data["out_trade_no"])->first();
+        Log::info(json_encode($order));
+        if ($order) {
+            $order->wx_transaction_id = $data["transaction_id"];
+            $order->wx_total_fee = $data["total_fee"];
+            $order->status = 'paid';
+            $order->save();
+
+            Log::debug('paid successfully');
+//            MessageFacade::sendBuyCompletedMessage(User::find($order->user_id), $course);
+            return true;
+        } else {
+            Log::debug('失败 ,No order which uuid is ' . $data['out_trade_no'] . ' found!');
+            return false;
+        }
     }
 
 }

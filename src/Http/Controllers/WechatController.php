@@ -11,9 +11,16 @@ namespace Bitmyth\Wechat\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class OrderController extends Controller
+/**
+ * Class WechatController
+ * @package Bitmyth\Wechat\Http\Controllers
+ */
+class WechatController extends Controller
 {
 
+    /**
+     * @return string
+     */
     public function uuid()
     {
         return md5(uniqid(rand(), true));

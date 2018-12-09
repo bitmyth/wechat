@@ -1,6 +1,11 @@
 {
   "name": "bitmyth/wechat",
-  "description": "PHP library for wechat development",
+  "description": "laravel provider for wechat development",
+  "keywords": [
+    "wechat",
+    "laravel",
+    "provider"
+  ],
   "type": "library",
   "require": {
     "php": "^7.0",
