@@ -6,7 +6,7 @@
  * Time: 3:13 PM
  */
 
-namespace Laravel\Passport;
+namespace Bitmyth\Wechat;
 
 
 use Wechat\WxPayApi;
