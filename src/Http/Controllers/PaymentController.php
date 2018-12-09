@@ -43,7 +43,7 @@ class PaymentController extends Controller
 
             $data = array_merge($values, compact('sign', 'prepayId', 'order'));
 
-            return $this->prepayIdGenerated($data);
+            return $this->prepayIdGenerated($data, $order);
 
         } catch (\Exception $e) {
             $this->logError('wxpay.unifiedOrder', $e->getMessage(), '', '');
@@ -86,9 +86,10 @@ class PaymentController extends Controller
     /**
      * Prepay order successfully generated
      * @param $data
+     * @param $order
      * @return mixed
      */
-    protected function prepayIdGenerated($data)
+    protected function prepayIdGenerated($data, $order)
     {
         return $data;
     }
