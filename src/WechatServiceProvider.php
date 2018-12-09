@@ -43,7 +43,7 @@ class WechatServiceProvider extends ServiceProvider
      */
     protected function registerMigrations()
     {
-        return $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 
     /**
@@ -67,6 +67,10 @@ class WechatServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/wechat.php' => config_path('wechat.php'),
             ], 'wechat-config');
+
+            $this->publishes([
+                __DIR__.'/../public' => public_path('vendor/bitmyth/wechat'),
+            ], 'wechat-assets');
         }
     }
 

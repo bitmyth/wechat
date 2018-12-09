@@ -34,6 +34,9 @@ class InstallCommand extends \Illuminate\Console\Command
     public function handle()
     {
         $this->info('wechat install');
+        $this->callSilent('vendor:publish', ['--tag' => 'wechat-config']);
+        $this->callSilent('vendor:publish', ['--tag' => 'wechat-migrations']);
+        $this->callSilent('vendor:publish', ['--tag' => 'wechat-assets']);
 //        $this->call('passport:keys', ['--force' => $this->option('force'), '--length' => $this->option('length')]);
 //        $this->call('passport:client', ['--password' => true, '--name' => config('app.name').' Password Grant Client']);
     }
