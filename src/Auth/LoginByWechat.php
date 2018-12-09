@@ -30,18 +30,18 @@ trait LoginByWechat
             $data = json_decode($response["data"]);
             $response = WxApi::userInfo($data->access_token, $data->openid);
             if ($response["code"] == 200) {
-                return $this->authentecatedByWechat($response);
+                return $this->authenticatedByWechat($response);
             }
         }
-        $this->authentecatedByWechatFailed($response);
+        $this->authenticatedByWechatFailed($response);
     }
 
-    protected function authentecatedByWechat($response)
+    protected function authenticatedByWechat($response)
     {
         //
     }
 
-    protected function authentecatedByWechatFailed($response)
+    protected function authenticatedByWechatFailed($response)
     {
         return 'ERROR:' . $response["code"];
     }
