@@ -6,7 +6,7 @@
  * Time: 9:46 PM
  */
 
-namespace Bitmyth\Wechat\Http\Controllers;
+namespace Bitmyth\Wechat\Auth;
 
 use Illuminate\Http\Request;
 use Wechat\WxApi;
