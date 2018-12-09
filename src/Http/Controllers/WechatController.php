@@ -11,19 +11,12 @@ namespace Bitmyth\Wechat\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class WechatController extends Controller
+class OrderController extends Controller
 {
 
-    public function echo(Request $request)
+    public function uuid()
     {
-        $echoStr = $_GET["echostr"];
-        return $echoStr;
-//        if($this->checkSignature()){
-//        }
+        return md5(uniqid(rand(), true));
     }
 
-    public function info(Request $request)
-    {
-        return view('wechat::info');
-    }
 }

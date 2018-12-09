@@ -3,7 +3,8 @@
   "description": "PHP library for wechat development",
   "type": "library",
   "require": {
-    "php": "^7.0"
+    "php": "^7.0",
+    "bitmyth/wxpay": "^2.2"
   },
   "authors": [
     {
