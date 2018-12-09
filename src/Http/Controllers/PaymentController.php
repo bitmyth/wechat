@@ -29,7 +29,7 @@ class PaymentController extends Controller
         try {
             //调用统一下单API
             $ret = $this->placeUnifiedOrder($order);
-//            Log::info(__FILE__ . __LINE__);
+
             $appId = $ret['appid'];
             $timeStamp = time();
             $nonceStr = WxApi::getNonceStr();
@@ -40,11 +40,11 @@ class PaymentController extends Controller
                 'appId', 'timeStamp', 'nonceStr', 'package', 'signType'
             );
             $sign = WxApi::makeSign($values);
+
             $data = array_merge($values, compact('sign', 'prepayId', 'order'));
-            if ($request->ajax()) {
-                return ['success' => true, 'data' => $data];
-            }
-            return view('order.pay', $data);
+
+            return $this->prepayIdGenerated($data);
+
         } catch (\Exception $e) {
             $this->logError('wxpay.unifiedOrder', $e->getMessage(), '', '');
             if ($request->ajax()) {
@@ -81,6 +81,16 @@ class PaymentController extends Controller
             throw  new \Exception(json_encode($result));
         }
         return $result;
+    }
+
+    /**
+     * Prepay order successfully generated
+     * @param $data
+     * @return mixed
+     */
+    protected function prepayIdGenerated($data)
+    {
+        return $data;
     }
 
     /**
