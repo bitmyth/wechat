@@ -91,22 +91,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param $uuid
-     * @return \Wechat\成功时返回，其他抛异常
-     * @throws \Wechat\WxPayException
-     */
-    public static function queryOrder(Request $request, $uuid)
-    {
-        $payOrderQuery = new WxPayOrderQuery();
-        $payOrderQuery->SetOut_trade_no($uuid);
-        $result = WxPayApi::orderQuery($payOrderQuery);
-        return $result;
-    }
-
-    //退款
-
-    /**
+     * 退款
      * @param Request $request
      * @param $uuid
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
