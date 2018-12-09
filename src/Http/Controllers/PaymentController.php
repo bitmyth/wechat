@@ -46,11 +46,7 @@ class PaymentController extends Controller
             return $this->prepayIdGenerated($data, $order);
 
         } catch (\Exception $e) {
-            $this->logError('wxpay.unifiedOrder', $e->getMessage(), '', '');
-            if ($request->ajax()) {
-                return ['success' => false, 'message' => $e->getMessage()];
-            }
-            return view('admin.order.pay');
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 
@@ -77,7 +73,7 @@ class PaymentController extends Controller
         $input->SetOpenid(auth()->user()->openid);
         $result = WxPayApi::unifiedOrder($input);
         Log::debug('统一下单api返回值:' . json_encode($result));
-        if ($result['result_code'] == 'FAIL') {
+        if ($result['return_code'] == 'FAIL') {
             throw  new \Exception(json_encode($result));
         }
         return $result;
