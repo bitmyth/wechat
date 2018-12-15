@@ -10,6 +10,7 @@ namespace Bitmyth\Wechat\Auth;
 
 use Illuminate\Http\Request;
 use Wechat\WxApi;
+use Log;
 
 /**
  * Class WechatController
@@ -30,18 +31,18 @@ trait LoginByWechat
             $data = json_decode($response["data"]);
             $response = WxApi::userInfo($data->access_token, $data->openid);
             if ($response["code"] == 200) {
-                return $this->authenticatedByWechat($response);
+                return $this->authenticatedByWechat($request, $response);
             }
         }
-        $this->authenticatedByWechatFailed($response);
+		$this->authenticatedByWechatFailed($request, $response);
     }
 
-    protected function authenticatedByWechat($response)
+    protected function authenticatedByWechat($request, $response)
     {
         //
     }
 
-    protected function authenticatedByWechatFailed($response)
+    protected function authenticatedByWechatFailed($request, $response)
     {
         return 'ERROR:' . $response["code"];
     }

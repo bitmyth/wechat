@@ -69,7 +69,7 @@ class WechatServiceProvider extends ServiceProvider
             ], 'wechat-config');
 
             $this->publishes([
-                __DIR__.'/../public' => public_path('vendor/bitmyth/wechat'),
+                __DIR__ . '/../public' => public_path('vendor/bitmyth/wechat'),
             ], 'wechat-assets');
         }
     }

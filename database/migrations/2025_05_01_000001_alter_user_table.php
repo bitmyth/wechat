@@ -14,8 +14,8 @@ class AlterUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('openid')->nullable()->default('')->comment('wechat openid');
-            $table->string('unionid')->nullable()->default('')->comment('wechat unionid');
+            $table->string('openid')->nullable()->unique()->comment('wechat openid');
+            $table->string('unionid')->nullable()->unique()->comment('wechat unionid');
         });
     }
 

@@ -41,7 +41,7 @@ class PaymentController extends Controller
             );
             $sign = WxApi::makeSign($values);
 
-            $data = array_merge($values, compact('sign', 'prepayId', 'order'));
+            $data = array_merge($values, compact('sign', 'prepayId', 'order', 'appId'));
 
             return $this->prepayIdGenerated($data, $order);
 
@@ -59,6 +59,10 @@ class PaymentController extends Controller
     public function placeUnifiedOrder($order)
     {
         $input = new WxPayUnifiedOrder();
+
+        $input->SetAppid(config('wechat.mp.app_id'));
+        $input->SetMch_id(config('wechat.mch.mch_id'));
+
         $input->SetBody('购买' . $order->title);
         $input->SetAttach("test");
         $input->SetOut_trade_no($order->uuid); //$input->SetOut_trade_no(WxPayConfig::MCHID . date("YmdHis"));
@@ -71,7 +75,9 @@ class PaymentController extends Controller
         $input->SetTrade_type("JSAPI");//交易类型为公众号支付
         $input->SetProduct_id("32");
         $input->SetOpenid(auth()->user()->openid);
+
         $result = WxPayApi::unifiedOrder($input);
+
         Log::debug('统一下单api返回值:' . json_encode($result));
         if ($result['return_code'] == 'FAIL') {
             throw  new \Exception(json_encode($result));
