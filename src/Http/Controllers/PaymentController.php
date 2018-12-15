@@ -93,7 +93,7 @@ class PaymentController extends Controller
      */
     protected function prepayIdGenerated($data, $order)
     {
-        return $data;
+        // TODO
     }
 
     /**
