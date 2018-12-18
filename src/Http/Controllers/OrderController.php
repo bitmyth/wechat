@@ -10,7 +10,7 @@ namespace Bitmyth\Wechat\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Laravel\Passport\WechatOrder;
+use Bitmyth\Wechat\WechatOrder;
 
 /**
  * Class OrderController
@@ -19,6 +19,7 @@ use Laravel\Passport\WechatOrder;
 class OrderController extends Controller
 {
     use WechatOrder;
+
     /**
      * @param Request $request
      * @return mixed
@@ -31,5 +32,13 @@ class OrderController extends Controller
 //        }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function info(Request $request)
+    {
+        return view('wechat::info');
+    }
 
 }
