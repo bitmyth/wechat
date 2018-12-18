@@ -16,4 +16,4 @@ Route::get('/wechat', 'WechatController@echo')->name('wechat.echo');
 Route::get('/wechat/info', 'WechatController@info')->name('wechat.info');
 
 
-Route::any('/wechat/payment/notify', 'WechatController@paymentNotify')->name('wechat.payment.notify');
+Route::any('/wechat/payment/notify', 'PaymentController@paymentNotify')->name('wechat.payment.notify');

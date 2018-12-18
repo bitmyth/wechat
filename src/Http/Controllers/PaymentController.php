@@ -70,9 +70,12 @@ class PaymentController extends Controller
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
         $input->SetGoods_tag("test");
-        $input->SetNotify_url(config('app.url') . "/wechat/payment/notify");
+        $input->SetNotify_url(config('wechat.mch.notify_url'));
+
         $input->SetTrade_type("JSAPI");//交易类型为公众号支付
-        $input->SetProduct_id("32");
+
+        $input->SetProduct_id("test");
+
         $input->SetOpenid(auth()->user()->openid);
 
         $result = WxPayApi::unifiedOrder($input);
