@@ -11,6 +11,7 @@ namespace Bitmyth\Wechat;
 
 use Wechat\WxPayApi;
 use Wechat\WxPayOrderQuery;
+use Log;
 
 trait WechatOrder
 {

@@ -9,7 +9,6 @@
 namespace Bitmyth\Wechat;
 
 use Illuminate\Support\Facades\Log;
-use Laravel\Passport\WechatOrder;
 use Wechat\WxPayNotify;
 
 class PayNotifyCallback extends WxPayNotify
