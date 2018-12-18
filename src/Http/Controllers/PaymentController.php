@@ -67,7 +67,6 @@ class PaymentController extends Controller
         $input->SetAttach("test");
         $input->SetOut_trade_no($order->uuid); //$input->SetOut_trade_no(WxPayConfig::MCHID . date("YmdHis"));
         $input->SetTotal_fee($order->amount);
-//        $input->SetTotal_fee(1);//dev set to 1 cent
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
         $input->SetGoods_tag("test");
@@ -93,7 +92,7 @@ class PaymentController extends Controller
      */
     protected function prepayIdGenerated($data, $order)
     {
-        // TODO
+        // TODO implement this
     }
 
     /**
@@ -174,6 +173,7 @@ class PaymentController extends Controller
      */
     protected function paid($data)
     {
+        // Below is a demo implementation
         $order = Order::where('uuid', $data["out_trade_no"])->first();
         Log::info(json_encode($order));
         if ($order) {
@@ -183,7 +183,6 @@ class PaymentController extends Controller
             $order->save();
 
             Log::debug('paid successfully');
-//            MessageFacade::sendBuyCompletedMessage(User::find($order->user_id), $course);
             return true;
         } else {
             Log::debug('失败 ,No order which uuid is ' . $data['out_trade_no'] . ' found!');
