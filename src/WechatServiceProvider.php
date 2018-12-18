@@ -34,6 +34,10 @@ class WechatServiceProvider extends ServiceProvider
                 InstallCommand::class
             ]);
         }
+
+        define("WECHAT_MP_APP_ID", config('wechat.mp.app_id'));
+        define("WECHAT_MCH_ID", config('wechat.mch.mch_id'));
+
     }
 
     /**

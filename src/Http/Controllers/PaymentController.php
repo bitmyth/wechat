@@ -60,8 +60,8 @@ class PaymentController extends Controller
     {
         $input = new WxPayUnifiedOrder();
 
-        $input->SetAppid(config('wechat.mp.app_id'));
-        $input->SetMch_id(config('wechat.mch.mch_id'));
+        $input->SetAppid(WECHAT_MP_APP_ID);
+        $input->SetMch_id(WECHAT_MCH_ID);
 
         $input->SetBody('购买' . $order->title);
         $input->SetAttach("test");
