@@ -164,8 +164,8 @@ class PaymentController extends Controller
             $notify = new PayNotifyCallback([$this, 'paid']);
             $notify->Handle(false);
         } catch (\Exception $e) {
-            Log::info($e->getMessage());
-            Log::info($e->getTrace());
+            Log::error($e->getMessage());
+            Log::error($e->getTrace());
 
         }
     }
@@ -174,23 +174,23 @@ class PaymentController extends Controller
      * @param $data
      * @return bool
      */
-    protected function paid($data)
+    public function paid($data)
     {
         // Below is a demo implementation
-        $order = Order::where('uuid', $data["out_trade_no"])->first();
-        Log::info(json_encode($order));
-        if ($order) {
-            $order->wx_transaction_id = $data["transaction_id"];
-            $order->wx_total_fee = $data["total_fee"];
-            $order->status = 'paid';
-            $order->save();
-
-            Log::debug('paid successfully');
-            return true;
-        } else {
-            Log::debug('失败 ,No order which uuid is ' . $data['out_trade_no'] . ' found!');
-            return false;
-        }
+//        $order = Order::where('uuid', $data["out_trade_no"])->first();
+//        Log::info(json_encode($order));
+//        if ($order) {
+//            $order->wx_transaction_id = $data["transaction_id"];
+//            $order->wx_total_fee = $data["total_fee"];
+//            $order->status = 'paid';
+//            $order->save();
+//
+//            Log::debug('paid successfully');
+//            return true;
+//        } else {
+//            Log::debug('失败 ,No order which uuid is ' . $data['out_trade_no'] . ' found!');
+//            return false;
+//        }
     }
 
 }
